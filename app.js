@@ -6,7 +6,9 @@ let dataArray;
 //DOM references
 let button = document.getElementById('button')
 let allData = document.getElementById('all-data');
-
+let one = document.getElementById('one')
+let two = document.getElementById('two')
+let three = document.getElementById('three')
 
 //fetch data from URL
 function fetchData(url) {
@@ -15,7 +17,7 @@ function fetchData(url) {
             return res.text();
         })
         .then(data => {
-            console.log("Success:", data);
+            // console.log("Success:", data);
             dataArray = data
         })
         .catch((err) => {
@@ -29,17 +31,24 @@ fetchData(proxyUrl + url)
 function cleanData(data) {
     let result = []
     let string = data.split((/\r?\n/))
+
     for (let i = 0; i < string.length; i++) {
         result.push(parseInt(string[i]))  
     }
-      // allData.textContent = dataArray
-    let sorted = result.sort((a, b) => a - b)
-    const cleanArray = new Set(sorted)
+        console.log(result)
+    let sorted = result.sort((a, b) => a - b) //sorts data
+    let cleanArray = new Set(sorted) //removes dublicates by storing unique values
     return finalArray = [...cleanArray]
 }
 
 // event listener to retrieve data
 button.addEventListener('click',() => {
+    //displays all text data
     allData.textContent = dataArray
-    console.log('testing', cleanData(dataArray))
+
+    let i = cleanData(dataArray)
+    // displays three lowest integers
+    one.textContent = i[0]
+    two.textContent = i[1]
+    three.textContent = i[2]
 })
